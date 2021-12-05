@@ -1,0 +1,195 @@
+{% extends 'shop/basic.html' %}
+{% block title%}Sale by Plyprv %} {% endblock %}
+      {% block css %}
+          .col-md-3
+          {
+          display: inline-block;
+          margin-left:-4px;
+          }
+          .carousel-indicators .active {
+          background-color: blue;
+            }
+          .col-md-3 img{
+          max-width: 227px;
+          height: 242px;
+          }
+          body .carousel-indicator li{
+          background-color: blue;
+          }
+          body .carousel-indicators{
+          bottom: 0;
+          }
+          body .carousel-control-prev-icon,
+          body .carousel-control-next-icon{
+          background-color: blue;
+          }
+           body .no-padding{
+           padding-left: 0,
+           padding-right: 0;
+           }
+      {% endblock %}
+{% block body %}
+{% load static %}
+<div class="container">
+<div id="demo" class="carousel slide my-3" data-ride="carousel">
+    <ul class="carousel-indicators">
+      <li data-target="#demo" data-slide-to="0" class="active"></li>
+      <li data-target="#demo" data-slide-to="1" ></li>
+      <li data-target="#demo" data-slide-to="2" ></li>
+    </ul>
+
+    <!--Slideshow starts here -->
+    <div class="container carousel-inner no-padding">
+
+      <div class="carousel-item active">
+        <div class="col-xs-3 col-sm-3 col-md-3">
+          <div class="card" style="width: 18rem;">
+            <img src="{% static ''%}sh/j1.jpg" alt="">
+            <div class="card-body">
+                <h5 class="card-title">TALHAH YUNUS</h5>
+                <p class="card-text">Premium Jacket /n PRICE : 5000.</p>
+                <a href="#" class="btn btn-primary">Buy TY merchandise</a>
+            </div>
+          </div>
+       </div>
+
+        <div class="col-xs-3 col-sm-3 col-md-3">
+          <div class="card" style="width: 18rem;">
+            <img src="{% static ''%}sh/j2.jpg" alt="">
+            <div class="card-body">
+              <h5 class="card-title">TALHA ANJUM</h5>
+              <p class="card-text">Talha Anjum AKA Young Stunners/Rapper/Lyricist from Karachi, Pakistan.</p>
+              <a href="#" class="btn btn-primary">Buy TA merchandise</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-3 col-sm-3 col-md-3">
+          <div class="card" style="width: 18rem;">
+            <img src="{% static ''%}sh/j3.jpg" alt="">
+            <div class="card-body">
+              <h5 class="card-title">TALHAH YUNUS</h5>
+              <p class="card-text">Rapper/Songwriter/Record Producer/Filmmaker. Creative Head @youngstunnersofficial. CEO @stunnervisionofficial.</p>
+              <a href="#" class="btn btn-primary">Buy TY merchandise</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-3 col-sm-3 col-md-3">
+          <div class="card" style="width: 18rem;">
+            <img src="{% static ''%}sh/j4.jpg" alt="">
+            <div class="card-body">
+              <h5 class="card-title">TALHA ANJUM</h5>
+              <p class="card-text">Talha Anjum AKA Young Stunners/Rapper/Lyricist from Karachi, Pakistan.</p>
+              <a href="#" class="btn btn-primary">Buy TA merchandise</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="carousel-item">
+        <div class="col-xs-3 col-sm-3 col-md-3">
+          <div class="card" style="width: 18rem;">
+            <img src="{% static ''%}sh/ty.jpg" alt="">
+            <div class="card-body">
+                <h5 class="card-title">TALHAH YUNUS</h5>
+                <p class="card-text">Rapper/Songwriter/Record Producer/Filmmaker. Creative Head @youngstunnersofficial. CEO @stunnervisionofficial.</p>
+                <a href="#" class="btn btn-primary">Buy TY merchandise</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-3 col-sm-3 col-md-3">
+          <div class="card" style="width: 18rem;">
+            <img src="{% static ''%}sh/ta.jpg" alt="">
+            <div class="card-body">
+              <h5 class="card-title">TALHA ANJUM</h5>
+              <p class="card-text">Talha Anjum AKA Young Stunners/Rapper/Lyricist from Karachi, Pakistan.</p>
+              <a href="#" class="btn btn-primary">Buy TA merchandise</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-3 col-sm-3 col-md-3">
+          <div class="card" style="width: 18rem;">
+            <img src="{% static ''%}sh/ty.jpg" alt="">
+            <div class="card-body">
+              <h5 class="card-title">TALHAH YUNUS</h5>
+              <p class="card-text">Rapper/Songwriter/Record Producer/Filmmaker. Creative Head @youngstunnersofficial. CEO @stunnervisionofficial.</p>
+              <a href="#" class="btn btn-primary">Buy TY merchandise</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-3 col-sm-3 col-md-3">
+          <div class="card" style="width: 18rem;">
+            <img src="{% static ''%}sh/ta.jpg" alt="">
+            <div class="card-body">
+              <h5 class="card-title">TALHA ANJUM</h5>
+              <p class="card-text">Talha Anjum AKA Young Stunners/Rapper/Lyricist from Karachi, Pakistan.</p>
+              <a href="#" class="btn btn-primary">Buy TA merchandise</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <div class="col-xs-3 col-sm-3 col-md-3">
+          <div class="card" style="width: 18rem;">
+            <img src="{% static ''%}sh/ty.jpg" alt="">
+            <div class="card-body">
+                <h5 class="card-title">TALHAH YUNUS</h5>
+                <p class="card-text">Rapper/Songwriter/Record Producer/Filmmaker. Creative Head @youngstunnersofficial. CEO @stunnervisionofficial.</p>
+                <a href="#" class="btn btn-primary">Buy TY merchandise</a>
+            </div>
+          </div>
+       </div>
+
+        <div class="col-xs-3 col-sm-3 col-md-3">
+          <div class="card" style="width: 18rem;">
+            <img src="{% static ''%}sh/ta.jpg" alt="">
+            <div class="card-body">
+              <h5 class="card-title">TALHA ANJUM</h5>
+              <p class="card-text">Talha Anjum AKA Young Stunners/Rapper/Lyricist from Karachi, Pakistan.</p>
+              <a href="#" class="btn btn-primary">Buy TA merchandise</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-3 col-sm-3 col-md-3">
+          <div class="card" style="width: 18rem;">
+            <img src="{% static ''%}sh/ty.jpg" alt="">
+            <div class="card-body">
+              <h5 class="card-title">TALHAH YUNUS</h5>
+              <p class="card-text">Rapper/Songwriter/Record Producer/Filmmaker. Creative Head @youngstunnersofficial. CEO @stunnervisionofficial.</p>
+              <a href="#" class="btn btn-primary">Buy TY merchandise</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-3 col-sm-3 col-md-3">
+          <div class="card" style="width: 18rem;">
+            <img src="{% static ''%}sh/ta.jpg" alt="">
+            <div class="card-body">
+              <h5 class="card-title">TALHA ANJUM</h5>
+              <p class="card-text">Talha Anjum AKA Young Stunners/Rapper/Lyricist from Karachi, Pakistan.</p>
+              <a href="#" class="btn btn-primary">Buy TA merchandise</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</div>
+
+    <!-- left and right controls for the slide -->
+    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </a>
+{% endblock %}
+</div>
