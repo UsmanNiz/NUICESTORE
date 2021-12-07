@@ -8,8 +8,9 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.template.loader import render_to_string
 from shop.forms import SignUpForm
-from shop.tokens import account_activation_token
-
+#from shop.tokens import account_activation_token
+from django.core.mail import send_mail
+from django.conf import settings
 # Create your views here.
 from django.http import HttpResponse
 
@@ -64,6 +65,29 @@ def checkout(request):
 
 def sale(request):
     return render(request,'shop/sale.html')
+# def signup(request):
+#     if request.method == 'POST':
+#         form = SignUpForm(request.POST)
+#         if form.is_valid():
+#             user = form.save(commit=False)
+#             user.is_active = False
+#             user.save()
+#             current_site = get_current_site(request)
+#             subject = 'Activate Your MySite Account'
+#             message = render_to_string('account_activation_email.html', {
+#                 'user': user,
+#                 'domain': current_site.domain,
+#                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+#                 'token': account_activation_token.make_token(user),
+#             })
+#             user.email_user(subject, message)
+#             return redirect('account_activation_sent')
+#     else:
+#         form = SignUpForm()
+#     #return render(request, 'signup.html', {'form': form})
+#     return render(request, 'shop/signup.html', {'form': form})
+
+
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -71,17 +95,52 @@ def signup(request):
             user = form.save(commit=False)
             user.is_active = False
             user.save()
-            current_site = get_current_site(request)
-            subject = 'Activate Your MySite Account'
-            message = render_to_string('account_activation_email.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': account_activation_token.make_token(user),
-            })
-            user.email_user(subject, message)
-            return redirect('account_activation_sent')
+            # current_site = get_current_site(request)
+            # subject = 'Activate Your MySite Account'
+            # message = render_to_string('shop/account_activation_email.html', {
+            #     'user': user,
+            #     'domain': current_site.domain,
+            #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            #     'token': account_activation_token.make_token(user),
+            # })
+            # user.email_user(subject, message)
+            email = self.cleaned_data['email']
+            subject = 'Thank you for registering to our site'
+            message = ' it  means a world to us '
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [email, ]
+            send_mail(subject, message, email_from, recipient_list)
+
+            return redirect('shop/account_activation_sent.html')
     else:
         form = SignUpForm()
-    #return render(request, 'signup.html', {'form': form})
     return render(request, 'shop/signup.html', {'form': form})
+
+
+def account_activation_sent(request):
+    return render(request, 'shop/account_activation_sent.html')
+
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.profile.email_confirmed = True
+        user.save()
+        login(request, user)
+        return redirect('home')
+    else:
+        return render(request, 'account_activation_invalid.html')
+def sendemail(request):
+
+        subject = 'Thank you for registering to our site'
+        message = ' it  means a world to us '
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = ['sohaibkhanpriv@gmail.com', ]
+        send_mail(subject, message, email_from, recipient_list)
+        return render(request,'sendemail.html')
