@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Product, Contact, Sign
+from .models import Product, Contact, Customer
 from math import ceil
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
@@ -7,13 +7,23 @@ import base64
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.template.loader import render_to_string
-from shop.forms import SignUpForm
+from shop.forms import UserRegisterForm
 #from shop.tokens import account_activation_token
 from django.core.mail import send_mail
 from django.conf import settings
 # Create your views here.
 from django.http import HttpResponse
-
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
+from .forms import UserRegisterForm
+from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import get_template
+from django.template import Context
+email = "k190292@nu.edu.pk"
 def index(request):
     # products = Product.objects.all()
     # print(products)
@@ -90,30 +100,50 @@ def sale(request):
 
 def signup(request):
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
+        form = UserRegisterForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.is_active = False
-            user.save()
-            # current_site = get_current_site(request)
-            # subject = 'Activate Your MySite Account'
-            # message = render_to_string('shop/account_activation_email.html', {
-            #     'user': user,
-            #     'domain': current_site.domain,
-            #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            #     'token': account_activation_token.make_token(user),
-            # })
-            # user.email_user(subject, message)
-            email = self.cleaned_data['email']
-            subject = 'Thank you for registering to our site'
-            message = ' it  means a world to us '
-            email_from = settings.EMAIL_HOST_USER
-            recipient_list = [email, ]
-            send_mail(subject, message, email_from, recipient_list)
+            form.save()
+            username = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('email')
+            # recipient_list = [email, ]
+            # subject = "CONFIRMATION EMAIL"
+            # email_from = settings.EMAIL_HOST_USER
+            # message = "THIS EMAIL IS A CONFIRMATION EMAIL, THANKYOU FOR REGISTERATION !!"
+            # send_mail(subject, message, email_from, recipient_list)
+            sendemail(request)
+            return render(request,'shop/login.html')
+        else:
+            form = UserRegisterForm()
+            return render(request, 'shop/signup.html', {'form': form, 'title': 'reqister here'})
 
-            return redirect('shop/account_activation_sent.html')
+
+
+
+
+    # form = UserRegisterForm(request.POST)
+        # if form.is_valid():
+        #     user = form.save(commit=False)
+        #     user.is_active = False
+        #     user.save()
+        #     username = form.cleaned_data.get('username')
+        #     email = form.cleaned_data.get('email')
+        #     current_site = get_current_site(request)
+        #     subject = 'Activate Your MySite Account'
+        #     message = render_to_string('shop/account_activation_email.html', {
+        #         'user': user,
+        #         'domain': current_site.domain,
+        #         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        #         'token': account_activation_token.make_token(user),
+        #     })
+        #     user.email_user(subject, message)
+        #     subject = 'Thank you for registering to our site'
+        #     message = ' it means much to us '
+        #     email_from = settings.EMAIL_HOST_USER
+        #     recipient_list = [email]
+        #     send_mail(subject, message, email_from, recipient_list)
+            # return redirect('shop/account_activation_sent.html')
     else:
-        form = SignUpForm()
+        form = UserRegisterForm()
     return render(request, 'shop/signup.html', {'form': form})
 
 
@@ -141,6 +171,6 @@ def sendemail(request):
         subject = 'Thank you for registering to our site'
         message = ' it  means a world to us '
         email_from = settings.EMAIL_HOST_USER
-        recipient_list = ['sohaibkhanpriv@gmail.com', ]
+        recipient_list = [email,]
         send_mail(subject, message, email_from, recipient_list)
-        return render(request,'sendemail.html')
+        return render(request,'shop/sendemail.html')

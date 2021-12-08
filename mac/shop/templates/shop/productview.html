@@ -21,8 +21,9 @@
     <div class="col-md-8 mt-5">
         <h4>{{product.product_name}}</h4>
         <h5><b>Mrp Rs: </b>{{product.price}}</h5>
-        <p><b>Product Description :</b> <br>{{product.desc}}<br><button id="{{product.product_id}}" class="btn btn-primary cart">Add To Cart</button>
-        <button id="qr{{product_id}}" class="btn btn-primary clear">Remove item</button</p>
+        <p><b>Product Description :</b> <br>{{product.desc}}<br>
+            <button id="{{product.product_id}}" class="btn btn-primary cart">Add To Cart</button>
+        <button id="qr{{product_id}}" class="btn btn-primary clear">Remove item</button></p>
     </div>
     </div>
 
@@ -36,6 +37,9 @@
 {% block js %}
 <script>
 console.log('working');
+$('.clear').click(function(){
+console.log('clicked')})
+
 if(localStorage.getItem('cart') == null){
 var cart = {};
 }
@@ -59,6 +63,7 @@ console.log(cart);
 localStorage.setItem('cart', JSON.stringify(cart));
 document.getElementById('cart').innerHTML = Object.keys(cart).length;
 });
+
 $('#popcart').popover();
 document.getElementById("popcart").setAttribute('data-content', '<h5>Cart for your items in my shopping cart</h5>');
 </script>
