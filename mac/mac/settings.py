@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'shop.apps.ShopConfig',
+    'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -131,5 +132,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'sohaibkhen@gmail.com'
+EMAIL_HOST_USER = 'sohaibkhanpriv@gmail.com'
 EMAIL_HOST_PASSWORD = ''
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
