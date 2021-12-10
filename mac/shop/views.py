@@ -74,6 +74,16 @@ def tracker(request):
 def search(request):
     return render(request,'shop/search.html')
 
+def shoppingcart(request):
+    cart = Cart.objects.values('product_id')
+    # print(cart)
+    cart_dict = {
+        'product': cart
+    }
+    print(cart_dict)
+    print(cart_dict)
+    return render(request,'shop/shoppingcart.html', cart_dict)
+
 def productview(request,myid):
     #fetch the product using Id
     product = Product.objects.filter(product_id=myid)
@@ -96,17 +106,18 @@ def productview(request,myid):
                 Cart_instance.save()
         else:
             cartchk = Cart.objects.filter(product_id=myid).first()  # yeh keh rha hai k agar database is id ki koi cheez tou if main ghuss jaou
-            if cartchk and cartchk.quantity > 0:
+            if cartchk and cartchk.quantity > 1:
                 print("already added")
                 cartchk.quantity = cartchk.quantity - 1
                 cartchk.save()
+            else:
+                 Cart.objects.filter(product_id=myid).delete()
+
 
 
 
     return render(request,'shop/productview.html',{'product':product[0]})
 
-def shoppingcart(request):
-    return render(request,'shop/shoppingcart.html')
 def checkout(request):
     return render(request,'shop/checkout.html')
 

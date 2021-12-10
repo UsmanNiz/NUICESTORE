@@ -71,9 +71,12 @@
             <div class="card-body">
               <h5 class="card-title">{{i.product_name}}</h5>
               <p class="card-text">{{i.desc}}</p>
-              <button id="{{i.product_id}}" class="btn btn-primary cart">Add To Cart</button>
+                <form action="/shop/productview/{{i.product_id}}" method="POST">
+                    {% csrf_token %}
+              <button type="submit" name="add" id="{{i.product_id}}" class="btn btn-primary cart">Add To Cart</button>
               <a href="/shop/productview/{{i.product_id}}"> <button id="qv{{i.id}}" class="btn btn-primary cart">Quick View</button>
              </a>
+                </form>
             </div>
           </div>
         </div>
