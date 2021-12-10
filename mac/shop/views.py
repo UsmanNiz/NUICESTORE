@@ -23,11 +23,15 @@ from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
+<<<<<<< Updated upstream
 # <<<<<<< HEAD
 email = "k190292@nu.edu.pk"
 # =======
 email = "sohaibkhen@gmail.com"
 # >>>>>>> 255f6d868542df49ce5e52f76d1e34367a673d89
+=======
+email = "k190292@nu.edu.pk"
+>>>>>>> Stashed changes
 def index(request):
     # products = Product.objects.all()
     # print(products)

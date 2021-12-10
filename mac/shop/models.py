@@ -34,7 +34,11 @@ class Customer(models.Model):
 
     def __str__(self):
         return self.username
+<<<<<<< Updated upstream
 # <<<<<<< HEAD
+=======
+
+>>>>>>> Stashed changes
 class SignIn(models.Model):
     customer_id = models.ForeignKey(Customer,on_delete=models.CASCADE)
     username = models.CharField(max_length=25 , primary_key=True)
@@ -99,7 +103,10 @@ class History(models.Model):
 # class History(models.Model):
     # dictionary containing all the sold products_id(Fkey),date,price,c_id(foreign key)
 
+<<<<<<< Updated upstream
 # =======
+=======
+>>>>>>> Stashed changes
 #class Come(models.Model):
 #    c_id = models.AutoField(primary_key = True)
 #    name = models.CharField(max_length=50)
@@ -108,7 +115,15 @@ class History(models.Model):
 #class History(models.Model):
     #dictionary containing all the sold products_id(Fkey),date,price,c_id(foreign key)
 
+#
+# class Profile(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE)
+#     # bio = models.TextField(max_length=500, blank=True)
+#     # location = models.CharField(max_length=30, blank=True)
+#     # birth_date = models.DateField(null=True, blank=True)
+#     email_confirmed = models.BooleanField(default=False)
 
+<<<<<<< Updated upstream
 # class Profile(models.Model):
 #     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # bio = models.TextField(max_length=500, blank=True)
@@ -116,6 +131,8 @@ class History(models.Model):
     # birth_date = models.DateField(null=True, blank=True)
 #     email_confirmed = models.BooleanField(default=False)
 #
+=======
+>>>>>>> Stashed changes
 #
 # @receiver(post_save, sender=User)
 # def update_user_profile(sender, instance, created, **kwargs):
