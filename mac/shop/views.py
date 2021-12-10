@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Product, Contact, Customer
+from .models import *
 from math import ceil
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
@@ -23,15 +23,8 @@ from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
-<<<<<<< Updated upstream
-# <<<<<<< HEAD
 email = "k190292@nu.edu.pk"
-# =======
-email = "sohaibkhen@gmail.com"
-# >>>>>>> 255f6d868542df49ce5e52f76d1e34367a673d89
-=======
-email = "k190292@nu.edu.pk"
->>>>>>> Stashed changes
+
 def index(request):
     # products = Product.objects.all()
     # print(products)
@@ -53,6 +46,7 @@ def index(request):
     return render(request, 'shop/index.html', params)
 
 def about(request):
+    print("THIS IS REQUEST")
     return render(request, 'shop/about.html')
 
 def contact(request):
@@ -65,6 +59,15 @@ def contact(request):
         contact = Contact(name=name, email=email, phone=phone, desc=desc)
         contact.save()
     return render(request, "shop/contact.html")
+
+# def Cartsa(request):
+#     if request.method=="POST:":
+#         print(request)
+
+
+    # return render(request,'shop/productview.html')
+
+
 def tracker(request):
     return render(request,'shop/tracker.html')
 
@@ -75,6 +78,30 @@ def productview(request,myid):
     #fetch the product using Id
     product = Product.objects.filter(product_id=myid)
     print(product)
+    if request.method == "POST":
+        print(request.POST.get('name'))
+        if 'add' in request.POST:
+            print(request)
+            cartchk = Cart.objects.filter(product_id=myid).first() #yeh keh rha hai k agar database is id ki koi cheez tou if main ghuss jaou
+            if cartchk:
+                print("already added")
+                cartchk.quantity = cartchk.quantity + 1
+                cartchk.save()
+
+            else:
+                print("not added")
+                VarProductId = Product.objects.get(product_id=myid)
+                print(id)
+                Cart_instance = Cart.objects.create(product_id=VarProductId, quantity=1)    #yeh nhi chal raha
+                Cart_instance.save()
+        else:
+            cartchk = Cart.objects.filter(product_id=myid).first()  # yeh keh rha hai k agar database is id ki koi cheez tou if main ghuss jaou
+            if cartchk and cartchk.quantity > 0:
+                print("already added")
+                cartchk.quantity = cartchk.quantity - 1
+                cartchk.save()
+
+
 
     return render(request,'shop/productview.html',{'product':product[0]})
 
@@ -115,11 +142,6 @@ def signup(request):
             form.save()
             username = form.cleaned_data.get('username')
             email = form.cleaned_data.get('email')
-            # recipient_list = [email, ]
-            # subject = "CONFIRMATION EMAIL"
-            # email_from = settings.EMAIL_HOST_USER
-            # message = "THIS EMAIL IS A CONFIRMATION EMAIL, THANKYOU FOR REGISTERATION !!"
-            # send_mail(subject, message, email_from, recipient_list)
             sendemail(request)
             return render(request,'shop/login.html')
         else:

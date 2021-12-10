@@ -31,7 +31,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'shop.apps.ShopConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
+    'shop'
+
 
 ]
 
@@ -132,16 +133,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-<<<<<<< Updated upstream
-# <<<<<<< HEAD
 EMAIL_HOST_USER = 'usmannizamani151@gmail.com'
 EMAIL_HOST_PASSWORD = 'Niz@mani123'
-# =======
-EMAIL_HOST_USER = 'sohaibkhanpriv@gmail.com'
-EMAIL_HOST_PASSWORD = ''
-# >>>>>>> 255f6d868542df49ce5e52f76d1e34367a673d89
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-=======
-EMAIL_HOST_USER = 'usmannizamani151@gmail.com'
-EMAIL_HOST_PASSWORD = 'Niz@mani123'
->>>>>>> Stashed changes
+

@@ -19,11 +19,14 @@
 
     </div>
     <div class="col-md-8 mt-5">
+        <form action="/shop/productview/{{product.product_id}}" method="POST" >
+    {% csrf_token %}
         <h4>{{product.product_name}}</h4>
         <h5><b>Mrp Rs: </b>{{product.price}}</h5>
         <p><b>Product Description :</b> <br>{{product.desc}}<br>
-            <button id="{{product.product_id}}" class="btn btn-primary cart">Add To Cart</button>
-        <button id="qr{{product_id}}" class="btn btn-primary clear">Remove item</button></p>
+            <button type='submit' name = "add" class="btn btn-primary cart">Add To Cart</button>
+        <button type='submit' name="rem" class="btn btn-primary clear">Remove item</button></p>
+    </form>
     </div>
     </div>
 
