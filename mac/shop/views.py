@@ -75,14 +75,17 @@ def search(request):
     return render(request,'shop/search.html')
 
 def shoppingcart(request):
-    cart = Cart.objects.values('product_id')
-    # print(cart)
-    cart_dict = {
-        'product': cart
-    }
-    print(cart_dict)
-    print(cart_dict)
-    return render(request,'shop/shoppingcart.html', cart_dict)
+    cart = Cart.objects.all()
+    print("I AM CART ", cart[0].product_id.price)
+    total = 0
+    for i in cart:
+        total = total + i.product_id.price * i.quantity
+    print(total)
+    invoice = Invoice.objects.all()
+    print("I AM INVOICE " , invoice[0].cart_id.product_id.price)
+    length = len(cart)
+    params = {'cart' : cart , 'total': total , 'length' : length }
+    return render(request,'shop/shoppingcart.html', params )
 
 def productview(request,myid):
     #fetch the product using Id
