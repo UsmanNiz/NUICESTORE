@@ -6,7 +6,6 @@ admin.site.register(Customer)
 admin.site.register(Cart)
 admin.site.register(Invoice)
 admin.site.register(Feedback)
-#admin.site.register(Profile)
 admin.site.register(SignIn)
 admin.site.register(History)
 

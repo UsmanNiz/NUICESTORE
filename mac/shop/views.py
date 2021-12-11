@@ -81,11 +81,28 @@ def shoppingcart(request):
     for i in cart:
         total = total + i.product_id.price * i.quantity
     print(total)
-    invoice = Invoice.objects.all()
-    # print("I AM INVOICE " , invoice[0].cart_id.product_id.price)
     length = len(cart)
     params = {'cart' : cart , 'total': total , 'length' : length }
     return render(request,'shop/shoppingcart.html', params )
+
+
+def checkout(request):
+    if request.method == "POST":
+        print('asd')
+    date=datetime.date.today()
+    carts = Cart.objects.all()
+    total = 0
+    amount = []
+    cart = []
+    for i in carts:
+        # cart = Cart.object.get("product_id": i.product_id)
+        total = total + i.product_id.price * i.quantity
+        amount.append(i.product_id.price * i.quantity)
+
+    cust = Customer.objects.all()
+    params ={ 'cart' : carts , 'total' : total, 'cust':cust,'date':date,'amount' : amount}
+
+    return render(request,'shop/checkout.html',params)
 
 def productview(request,myid):
     #fetch the product using Idass
@@ -121,10 +138,6 @@ def productview(request,myid):
 
     return render(request,'shop/productview.html',{'product':product[0]})
 
-def checkout(request):
-
-
-    return render(request,'shop/checkout.html')
 
 def sale(request):
     return render(request,'shop/sale.html')
