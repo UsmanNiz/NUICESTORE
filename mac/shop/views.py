@@ -82,7 +82,7 @@ def shoppingcart(request):
         total = total + i.product_id.price * i.quantity
     print(total)
     invoice = Invoice.objects.all()
-    print("I AM INVOICE " , invoice[0].cart_id.product_id.price)
+    # print("I AM INVOICE " , invoice[0].cart_id.product_id.price)
     length = len(cart)
     params = {'cart' : cart , 'total': total , 'length' : length }
     return render(request,'shop/shoppingcart.html', params )
@@ -122,6 +122,8 @@ def productview(request,myid):
     return render(request,'shop/productview.html',{'product':product[0]})
 
 def checkout(request):
+
+
     return render(request,'shop/checkout.html')
 
 def sale(request):
