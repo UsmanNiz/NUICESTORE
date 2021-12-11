@@ -36,13 +36,14 @@ class Customer(models.Model):
         return self.name
 
 class SignIn(models.Model):
+    sign_in_id = models.AutoField(primary_key=True)
     customer_id = models.ForeignKey(Customer,on_delete=models.CASCADE)
-    username = models.CharField(max_length=25 , primary_key=True)
-    password = models.CharField(max_length=70, default="00000000")
 
 class Cart(models.Model):
+    cart_id = models.AutoField(primary_key = True)
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
+
 class Invoice (models.Model):
     invoice_id = models.AutoField(primary_key= True)
     customer_id = models.ForeignKey(Customer, on_delete=models.CASCADE)
