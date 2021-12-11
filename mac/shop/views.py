@@ -88,7 +88,7 @@ def shoppingcart(request):
     return render(request,'shop/shoppingcart.html', params )
 
 def productview(request,myid):
-    #fetch the product using Id
+    #fetch the product using Idass
     product = Product.objects.filter(product_id=myid)
     print(product)
     if request.method == "POST":
