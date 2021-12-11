@@ -75,14 +75,24 @@ def search(request):
     return render(request,'shop/search.html')
 
 def shoppingcart(request):
-    cart = Cart.objects.values('product_id')
-    # print(cart)
-    cart_dict = {
-        'product': cart
-    }
-    print(cart_dict)
-    print(cart_dict)
-    return render(request,'shop/shoppingcart.html', cart_dict)
+    if request.method == "POST":
+        if 'rem' in request.POST:
+            return HttpResponse("request")
+    allprods = []
+    total = 0
+    qty = []
+    Prod = Cart.objects.values('product_id', 'quantity')
+    ids = {item['product_id'] for item in Prod}
+    for ids in Prod:
+        p = Product.objects.filter(product_id=ids['product_id']).first()
+        q = Cart.objects.filter(product_id=ids['product_id']).first()
+        total = total + (p.price * q.quantity)
+        products = Product.objects.filter(product_id=ids['product_id'])
+        qty.append(ids['quantity'])
+        allprods.append(products)
+    lengh = len(allprods)
+    params = {'allProds': allprods,'l': lengh, 'total' : total,'qty':qty}
+    return render(request,'shop/shoppingcart.html',params)
 
 def productview(request,myid):
     #fetch the product using Id
@@ -119,6 +129,7 @@ def productview(request,myid):
     return render(request,'shop/productview.html',{'product':product[0]})
 
 def checkout(request):
+
     return render(request,'shop/checkout.html')
 
 def sale(request):
@@ -144,7 +155,6 @@ def sale(request):
 #         form = SignUpForm()
 #     #return render(request, 'signup.html', {'form': form})
 #     return render(request, 'shop/signup.html', {'form': form})
-
 
 def signup(request):
     if request.method == 'POST':
