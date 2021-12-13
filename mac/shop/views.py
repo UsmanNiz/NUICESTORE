@@ -26,16 +26,32 @@ from django.template import Context
 email = "k190292@nu.edu.pk"
 
 def signin(request):
-    if request.method == "POST":
-        print("I AM REQUEST", request)
-        email = request.POST.get('email', '')
-        password = request.POST.get('password', '')
-        iter = Customer.objects.all()
-        for i in iter:
-            if email == i.email and password == i.password:
-                signinn = SignIn(customer_id_id=i.customer_id)
-                signinn.save()
-                return HttpResponse("Signed In")
+    chk = signincheck.objects.get(sid=1)
+    if (chk.sign):
+        if request.method == "POST":
+            if 'add' in request.POST:
+                chk.sign = False
+                signincheck.objects.filter(sid=1).delete()
+                SignIn.objects.all().delete()
+                chk = signincheck(sid=1)
+                chk.save()
+                return render(request,'shop/signin.html')
+
+        return render(request,'shop/alreadysign.html')
+    else:
+        if request.method == "POST":
+            print("I AM REQUEST", request)
+            email = request.POST.get('email', '')
+            password = request.POST.get('password', '')
+            iter = Customer.objects.all()
+            for i in iter:
+                if email == i.email and password == i.password:
+                    signinn = SignIn(customer_id_id=i.customer_id)
+                    signinn.save()
+                    chk = signincheck.objects.get(sid=1)
+                    chk.sign = True
+                    chk.save()
+                    return render(request,'shop/index.html')
 
     return render(request, 'shop/signin.html')
 
@@ -75,14 +91,6 @@ def contact(request):
         contact.save()
     return render(request, "shop/contact.html")
 
-# def Cartsa(request):
-#     if request.method=="POST:":
-#         print(request)
-
-
-    # return render(request,'shop/productview.html')
-
-
 def tracker(request):
     return render(request,'shop/tracker.html')
 
@@ -101,25 +109,29 @@ def shoppingcart(request):
     return render(request,'shop/shoppingcart.html', params )
 
 def checkout(request):
-    if request.method == "POST":
-        print('asd')
-    date=datetime.date.today()
-    carts = Cart.objects.all()
-    total = 0
-    cart = []
-    signinn = SignIn.objects.all()
-    # return HttpResponse(signinn[0].customer_id_id)
-    for i in carts:
-        inv = Invoice(customer_id_id = signinn[0].customer_id_id, cart_id_id = i.cart_id, amount = i.quantity * i.product_id.price)
-        inv.save()
-        # cart = Cart.object.get("product_id": i.product_id)
-        total = total + i.product_id.price * i.quantity
-    # return HttpResponse(Invoice.objects.all())
-    invoice = Invoice.objects.all()
-    cust = Customer.objects.all()
-    params ={ 'cart' : carts , 'total' : total, 'cust':cust,'date':date,'invoice' : invoice }
-
-    return render(request,'shop/checkout.html',params)
+    chk = signincheck.objects.get(sid=1)
+    if (chk.sign):
+        if request.method == "POST":
+            print('asd')
+        date=datetime.date.today()
+        carts = Cart.objects.all()
+        total = 0
+        cart = []
+        signinn = SignIn.objects.all()
+        # return HttpResponse(signinn[0].customer_id_id)
+        for i in carts:
+            inv = Invoice(customer_id_id = signinn[0].customer_id_id, cart_id_id = i.cart_id, amount = i.quantity * i.product_id.price)
+            inv.save()
+            # cart = Cart.object.get("product_id": i.product_id)
+            total = total + i.product_id.price * i.quantity
+        # return HttpResponse(Invoice.objects.all())
+        invoice = Invoice.objects.all()
+        name =signinn[0].customer_id.name
+        cust = Customer.objects.get(name=name)
+        params ={ 'cart' : carts , 'total' : total, 'cust':cust,'date':date,'invoice' : invoice }
+        return render(request,'shop/checkout.html',params)
+    else:
+        return render(request,'shop/signin.html')
 
 def productview(request,myid):
     #fetch the product using Idass

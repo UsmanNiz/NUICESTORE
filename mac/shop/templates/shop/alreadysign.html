@@ -1,0 +1,12 @@
+{% extends 'shop/basic.html' %}
+{% block title %}Already Signed In {% endblock %}
+{% block body %}
+
+    <div class="container">
+  <p> You are already Signed In !!</p>
+        <form action="/shop/signin/" method="POST" >
+            {% csrf_token %}
+                        <button type='submit' name = "add" class="btn btn-primary cart">SIGN OUT</button>
+</form>
+</div>
+{% endblock %}

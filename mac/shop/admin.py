@@ -8,5 +8,5 @@ admin.site.register(Invoice)
 admin.site.register(Feedback)
 admin.site.register(SignIn)
 admin.site.register(History)
-
+admin.site.register(signincheck)
 # Register your models here.

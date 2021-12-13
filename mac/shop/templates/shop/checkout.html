@@ -34,11 +34,11 @@
                         <div class="col-sm-6">
                             <div>
                                 <span class="text-sm text-grey-m2 align-middle">To:</span>
-                                <span class="text-600 text-110 text-blue align-middle">{{cust.0.name}}</span>
+                                <span class="text-600 text-110 text-blue align-middle">{{cust.name}}</span>
                             </div>
                             <div class="text-grey-m2">
                                 <div class="my-1">
-                                    {{cust.0.address}}
+                                    {{cust.address}}
                                 </div>
                                 <div class="my-1">
                                     Sindh, Pakistan
@@ -82,7 +82,7 @@
                                 <div class="col-9 col-sm-5">{{cart.product_id.product_name}}</div>
                                 <div class="d-none d-sm-block col-2">{{cart.quantity}}</div>
                                 <div class="d-none d-sm-block col-2 text-95">RS. {{cart.product_id.price}}</div>
-                                <div class="col-2 text-secondary-d2">{% multiply cart.quantity cart.product_id.price %}</div>
+                                <div class="col-2 text-secondary-d2">RS. {% multiply cart.quantity cart.product_id.price %}</div>
                             </div>
                         {% endfor %}
 

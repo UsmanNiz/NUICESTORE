@@ -21,7 +21,7 @@
     <div class="col-md-8 mt-5">
         <form action="/shop/productview/{{product.product_id}}" method="POST" >
     {% csrf_token %}
-        <h4>{{product.product_name}}</h4>
+        <h4><b>{{product.product_name}}</b></h4>
         <h5><b>Mrp Rs: </b>{{product.price}}</h5>
         <p><b>Product Description :</b> <br>{{product.desc}}<br>
             <button type='submit' name = "add" class="btn btn-primary cart">Add To Cart</button>

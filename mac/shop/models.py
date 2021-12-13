@@ -67,7 +67,9 @@ class History(models.Model):
     date = models.DateField(default=datetime.date.today)
     def __str__(self):
         return self.date
-
+class signincheck(models.Model):
+    sid = models.IntegerField(default=1)
+    sign = models.BooleanField(default=False)
 # # class User(Sign):
 # #     is_email_verified = models.BooleanField(default=False)
 # #
