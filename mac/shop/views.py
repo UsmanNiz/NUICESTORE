@@ -7,7 +7,7 @@ import base64
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.template.loader import render_to_string
-from shop.forms import UserRegisterForm
+# from shop.forms import UserRegisterForm
 #from shop.tokens import account_activation_token
 from django.core.mail import send_mail
 from django.conf import settings
@@ -18,12 +18,27 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import UserRegisterForm
+# from .forms import UserRegisterForm
 from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
 email = "k190292@nu.edu.pk"
+
+def signin(request):
+    if request.method == "POST":
+        print("I AM REQUEST", request)
+        email = request.POST.get('email', '')
+        password = request.POST.get('password', '')
+        iter = Customer.objects.all()
+        for i in iter:
+            if email == i.email and password == i.password:
+                signinn = SignIn(customer_id_id=i.customer_id)
+                signinn.save()
+                return HttpResponse("Signed In")
+
+    return render(request, 'shop/signin.html')
+
 
 def index(request):
     # products = Product.objects.all()
@@ -85,22 +100,24 @@ def shoppingcart(request):
     params = {'cart' : cart , 'total': total , 'length' : length }
     return render(request,'shop/shoppingcart.html', params )
 
-
 def checkout(request):
     if request.method == "POST":
         print('asd')
     date=datetime.date.today()
     carts = Cart.objects.all()
     total = 0
-    amount = []
     cart = []
+    signinn = SignIn.objects.all()
+    # return HttpResponse(signinn[0].customer_id_id)
     for i in carts:
+        inv = Invoice(customer_id_id = signinn[0].customer_id_id, cart_id_id = i.cart_id, amount = i.quantity * i.product_id.price)
+        inv.save()
         # cart = Cart.object.get("product_id": i.product_id)
         total = total + i.product_id.price * i.quantity
-        amount.append(i.product_id.price * i.quantity)
-
+    # return HttpResponse(Invoice.objects.all())
+    invoice = Invoice.objects.all()
     cust = Customer.objects.all()
-    params ={ 'cart' : carts , 'total' : total, 'cust':cust,'date':date,'amount' : amount}
+    params ={ 'cart' : carts , 'total' : total, 'cust':cust,'date':date,'invoice' : invoice }
 
     return render(request,'shop/checkout.html',params)
 
@@ -165,17 +182,32 @@ def sale(request):
 
 
 def signup(request):
-    if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            email = form.cleaned_data.get('email')
-            sendemail(request)
-            return render(request,'shop/login.html')
-        else:
-            form = UserRegisterForm()
-            return render(request, 'shop/signup.html', {'form': form, 'title': 'reqister here'})
+    if request.method=="POST":
+        print("I AM REQUEST",request)
+        name=request.POST.get('name', '')
+        email=request.POST.get('email', '')
+        address=request.POST.get('address', '')
+        password=request.POST.get('password', '')
+        iter = Customer.objects.all()
+        for i in iter:
+            if email == i.email:
+                return HttpResponse("user already exists")
+        customer = Customer(name=name, email=email, address=address, password=password)
+        customer.save()
+
+    return render(request, 'shop/signup.html')
+
+    # if request.method == 'POST':
+    #     form = UserRegisterForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #         username = form.cleaned_data.get('username')
+    #         email = form.cleaned_data.get('email')
+    #         sendemail(request)
+    #         return render(request,'shop/login.html')
+    #     else:
+    #         form = UserRegisterForm()
+    #         return render(request, 'shop/signup.html', {'form': form, 'title': 'reqister here'})
 
 
 
@@ -203,9 +235,9 @@ def signup(request):
         #     recipient_list = [email]
         #     send_mail(subject, message, email_from, recipient_list)
             # return redirect('shop/account_activation_sent.html')
-    else:
-        form = UserRegisterForm()
-    return render(request, 'shop/signup.html', {'form': form})
+    # else:
+    #     form = UserRegisterForm()
+    # return render(request, 'shop/signup.html', {'form': form})
 
 
 def account_activation_sent(request):
