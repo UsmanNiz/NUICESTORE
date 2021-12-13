@@ -51,7 +51,8 @@ def signin(request):
                     chk = signincheck.objects.get(sid=1)
                     chk.sign = True
                     chk.save()
-                    return render(request,'shop/index.html')
+                    return redirect('/shop/')
+                    # return render(request,'shop/index.html')
 
     return render(request, 'shop/signin.html')
 
