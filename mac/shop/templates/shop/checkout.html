@@ -1,4 +1,4 @@
-
+{% load multiply %}
 {% block css%}
 <head>
 
@@ -10,6 +10,7 @@
 {% endblock %}
 {% block body %}
 <body>
+
     <div class="page-content container">
         <div class="page-header text-blue-d2">
             <h1 class="page-title text-secondary-d1">
@@ -81,40 +82,9 @@
                                 <div class="col-9 col-sm-5">{{cart.product_id.product_name}}</div>
                                 <div class="d-none d-sm-block col-2">{{cart.quantity}}</div>
                                 <div class="d-none d-sm-block col-2 text-95">RS. {{cart.product_id.price}}</div>
-                                <div class="col-2 text-secondary-d2">multiply</div>
+                                <div class="col-2 text-secondary-d2">{% multiply cart.quantity cart.product_id.price %}</div>
                             </div>
                         {% endfor %}
-
-
-<label for="firstNum">Number 1:</label>
-<input type="number" id="firstNum"  value={{cart.0.product_id.price}} name="firstNum">
-
-<label for="secondNum">Number 2:</label>
-<input type="number" id="secondNum" value={{cart.0.quantity}} name="secondNum"></br></br>
-
-<button onclick="multiply()">Multiply</button></br></br>
-
-<label for="result">Result</label>
-<input type="number" id="result" name="result"/>
-</main>
-
-<script>
-function multiply(){
-	num1 = document.getElementById("firstNum").value;
-	num2 = document.getElementById("secondNum").value;
-	result = num1 * num2;
-	document.getElementById("result").value = result;
-}
-</script>
-
-
-
-
-
-
-
-
-
 
                         </div>
 

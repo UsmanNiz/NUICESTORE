@@ -1,21 +1,33 @@
+
 {% extends 'shop/basic.html' %}
 {% block title %} Sign Up {% endblock %}
 {% block body %}
-  <h2>Sign up</h2>
-  <form method="post">
-    {% csrf_token %}
-    {% for field in form %}
-      <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% if field.help_text %}
-          <small style="color: grey">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
-        {% endfor %}
-      </p>
-    {% endfor %}
-    <button type="submit">Sign up</button>
-  </form>
+ <div class="container mt-5">
+     <h3>Sign Up</h3>
+     <form  method="POST" action="/shop/signup/" >{% csrf_token %}
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Your Name" required>
+          </div>
+          <div class="form-group">
+            <label for="name">Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter Your Email" required>
+        </div>
+         <div class="form-group">
+              <label for="name">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter Your Password" minlength="8" required>
+        </div>
+         <div class="form-group">
+                <label for="name">Address</label>
+                <input type="address" class="form-control" id="address" name="address" placeholder="Enter Your Address" minlength="15" maxlength="99" required>
+        </div>
+
+       <div class="form-group">
+                <a href="/shop" >
+                    <button type="submit" class="btn btn-success">SIGN UP</button>
+                </a>
+        </div>
+
+       </form>
+
 {% endblock %}
