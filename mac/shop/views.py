@@ -101,9 +101,36 @@ def search(request):
 
 def shoppingcart(request):
     if request.method == "POST":
-            Invoice.objects.all().delete()
-    # PREVIOUS
+        Invoice.objects.all().delete()
+        if 'add' in request.POST:
+            c = request.POST.get('add')
+            # prod = Product.object.filter(product_id = c)
+            cartchk = Cart.objects.filter(product_id=c).first() #yeh keh rha hai k agar database is id ki koi cheez tou if main ghuss jaou
+            if cartchk:
+                print("already added")
+                cartchk.quantity = cartchk.quantity + 1
+                cartchk.save()
+        elif 'rem' in request.POST:
+            c = request.POST.get('rem')
+            cartchk = Cart.objects.filter( product_id=c).first()  # yeh keh rha hai k agar database is id ki koi cheez tou if main ghuss jaou
+            if cartchk.quantity == 1:
+                Cart.objects.filter(product_id=c).delete()
+            elif cartchk:
+                print("already added")
+                cartchk.quantity = cartchk.quantity - 1
+                cartchk.save()
+            cart = Cart.objects.all()
+            if not cart:
+                return redirect('/shop/')
+        elif 'del' in request.POST:
+            c = request.POST.get('del')
+            Cart.objects.filter(product_id=c).delete()
+            cart = Cart.objects.all()
+            if not cart:
+                return redirect('/shop/')
     cart = Cart.objects.all()
+    if not cart:
+        return redirect("/shop/")
     print("I AM CART ", cart[0].product_id.price)
     total = 0
     for i in cart:
@@ -112,6 +139,7 @@ def shoppingcart(request):
     length = len(cart)
     params = {'cart' : cart , 'total': total , 'length' : length }
     return render(request,'shop/shoppingcart.html', params )
+
 
 
 def TY_page(request):
@@ -232,11 +260,14 @@ def signup(request):
         iter = Customer.objects.all()
         for i in iter:
             if email == i.email:
-                return HttpResponse("user already exists")
+                return redirect('/shop/userexist')
         customer = Customer(name=name, email=email, address=address, password=password)
         customer.save()
 
     return render(request, 'shop/signup.html')
+
+def exist(request):
+    return render(request,'shop/userexist.html')
 
     # if request.method == 'POST':
     #     form = UserRegisterForm(request.POST)

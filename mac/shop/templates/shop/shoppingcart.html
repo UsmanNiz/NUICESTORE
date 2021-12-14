@@ -37,17 +37,14 @@
                         <div class="row">{{product.product_id}}</div>
                     </div>
 
-<!--                    NEW  -->
 
-<!------ Include the above in your HEAD tag ---------->
-
-
-<!--                    NEW   -->
-                    <div class="col"> <form action="/shop/shoppingcart/" method="POST" >  <button name="rem"  type="submit" class=" btn-dark">-</button>
-{{product.quantity}} <button type="button" name="add" class="btn-dark">+</button>
-</form> </div>
-                    <div class="col">RS {{product.product_id.price}} <span class="close">&#10005;</span></div>
-                </div>
+                    <div class="col"> <form action="/shop/shoppingcart" method="POST" >
+                        {% csrf_token %}
+                        <button name="rem" type="submit" value={{product.product_id_id}} class=" btn-dark"> - </button> {{product.quantity}}
+                        <button type="submit" value={{product.product_id_id}} name="add" class="btn-dark"> + </button>
+ </div>
+                    <div class="col">RS {{product.product_id.price}}  <span class="close"> <button type="submit" value={{product.product_id_id}} name="del" class="btn-dark"> &#10005; </button></span></div>
+    </form>            </div>
             </div>
             {% endfor %}
 
