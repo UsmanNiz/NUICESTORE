@@ -145,12 +145,12 @@ def shoppingcart(request):
 def TY_page(request):
     invoice = Invoice.objects.all()
     history = History
-
     for i in invoice:
         History(customer_id_id=i.customer_id_id,
                 product_id_id=i.cart_id.product_id_id,
                 quantity=i.cart_id.quantity
                 ).save()
+    Cart.objects.all().delete()
     return render(request, 'shop/TY_page.html')
 
 def checkout(request):
