@@ -115,7 +115,7 @@ def shoppingcart(request):
 
 
 def TY_page(request):
-    return render(request, 'shop/TY_page.html')
+    return render(request, 'shop/floatingty.html')
 
 def checkout(request):
     chk = signincheck.objects.get(sid=1)
