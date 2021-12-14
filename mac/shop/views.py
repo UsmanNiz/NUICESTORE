@@ -98,7 +98,11 @@ def tracker(request):
 def search(request):
     return render(request,'shop/search.html')
 
+
 def shoppingcart(request):
+    if request.method == "POST":
+            Invoice.objects.all().delete()
+    # PREVIOUS
     cart = Cart.objects.all()
     print("I AM CART ", cart[0].product_id.price)
     total = 0
@@ -109,24 +113,40 @@ def shoppingcart(request):
     params = {'cart' : cart , 'total': total , 'length' : length }
     return render(request,'shop/shoppingcart.html', params )
 
+
+def TY_page(request):
+    return render(request, 'shop/TY_page.html')
+
 def checkout(request):
     chk = signincheck.objects.get(sid=1)
+    chk_inv = Invoice.objects.all()
     if (chk.sign):
         if request.method == "POST":
             print('asd')
         date=datetime.date.today()
         carts = Cart.objects.all()
         total = 0
-        cart = []
+        # cart = []
         signinn = SignIn.objects.all()
         # return HttpResponse(signinn[0].customer_id_id)
+        if not bool(chk_inv):
+            for i in carts:
+                inv = Invoice(customer_id_id = signinn[0].customer_id_id, cart_id_id = i.cart_id, amount = i.quantity * i.product_id.price)
+                inv.save()
+                # cart = Cart.object.get("product_id": i.product_id)
+                # total = total + i.product_id.price * i.quantity
         for i in carts:
-            inv = Invoice(customer_id_id = signinn[0].customer_id_id, cart_id_id = i.cart_id, amount = i.quantity * i.product_id.price)
-            inv.save()
-            # cart = Cart.object.get("product_id": i.product_id)
             total = total + i.product_id.price * i.quantity
         # return HttpResponse(Invoice.objects.all())
         invoice = Invoice.objects.all()
+        history = History
+
+        for i in invoice:
+            History(customer_id_id = i.customer_id_id,
+                    product_id_id = i.cart_id.product_id_id,
+                    quantity =i.cart_id.quantity
+                    ).save()
+        # return  HttpResponse(History.objects.all())
         name =signinn[0].customer_id.name
         cust = Customer.objects.get(name=name)
         params ={ 'cart' : carts , 'total' : total, 'cust':cust,'date':date,'invoice' : invoice }

@@ -43,8 +43,8 @@
 
 
 <!--                    NEW   -->
-                    <div class="col"> <form ><button type="submit" class=" btn-dark">-</button>
-{{product.quantity}} <button type="button" class="btn-dark">+</button>
+                    <div class="col"> <form action="/shop/shoppingcart/" method="POST" >  <button name="rem"  type="submit" class=" btn-dark">-</button>
+{{product.quantity}} <button type="button" name="add" class="btn-dark">+</button>
 </form> </div>
                     <div class="col">RS {{product.product_id.price}} <span class="close">&#10005;</span></div>
                 </div>

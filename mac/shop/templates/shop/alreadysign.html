@@ -1,12 +1,26 @@
 {% extends 'shop/basic.html' %}
 {% block title %}Already Signed In {% endblock %}
+
+{% block css %}
+          .center {
+              padding: 70px 0;
+              text-align: center;
+            }
+            .block {
+                  width: 40%;
+                  border: none;
+                  padding: 20px 28px;
+                  font-size: 16px;
+                  cursor: pointer;
+                }
+ {% endblock %}
 {% block body %}
 
-    <div class="container">
-  <p> You are already Signed In !!</p>
+    <div class="container center">
+  <h2> You are already Signed In !!</h2>
         <form action="/shop/signin/" method="POST" >
             {% csrf_token %}
-                        <button type='submit' name = "add" class="btn btn-primary cart">SIGN OUT</button>
+                        <button type='submit' name = "add" class="block btn btn-primary cart">SIGN OUT</button>
 </form>
 </div>
 {% endblock %}

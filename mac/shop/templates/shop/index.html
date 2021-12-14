@@ -39,6 +39,12 @@
            padding-left: 0,
            padding-right: 0;
            }
+        p {
+             width: 250px;
+             white-space: nowrap;
+             overflow: hidden;
+             text-overflow: ellipsis;
+            }
  {% endblock %}
 
 {% block body %}
@@ -70,7 +76,9 @@
             <img src='/media/{{i.image}}' class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">{{i.product_name}}</h5>
-              <p class="card-text">{{i.desc}}</p>
+
+                <p class="card-text">{{i.desc}}</p>
+
                 <form action="/shop/productview/{{i.product_id}}" method="POST">
                     {% csrf_token %}
               <button type="submit" name="add" id="{{i.product_id}}" class="btn btn-primary cart">Add To Cart</button>

@@ -64,9 +64,9 @@ class Feedback(models.Model):
 class History(models.Model):
     customer_id = models.ForeignKey(Customer, on_delete=models.CASCADE)
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=0)
     date = models.DateField(default=datetime.date.today)
-    def __str__(self):
-        return self.date
+
 class signincheck(models.Model):
     sid = models.IntegerField(default=1)
     sign = models.BooleanField(default=False)
