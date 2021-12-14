@@ -115,7 +115,15 @@ def shoppingcart(request):
 
 
 def TY_page(request):
-    return render(request, 'shop/floatingty.html')
+    invoice = Invoice.objects.all()
+    history = History
+
+    for i in invoice:
+        History(customer_id_id=i.customer_id_id,
+                product_id_id=i.cart_id.product_id_id,
+                quantity=i.cart_id.quantity
+                ).save()
+    return render(request, 'shop/TY_page.html')
 
 def checkout(request):
     chk = signincheck.objects.get(sid=1)
@@ -139,14 +147,14 @@ def checkout(request):
             total = total + i.product_id.price * i.quantity
         # return HttpResponse(Invoice.objects.all())
         invoice = Invoice.objects.all()
-        history = History
-
-        for i in invoice:
-            History(customer_id_id = i.customer_id_id,
-                    product_id_id = i.cart_id.product_id_id,
-                    quantity =i.cart_id.quantity
-                    ).save()
-        # return  HttpResponse(History.objects.all())
+        # history = History
+        #
+        # for i in invoice:
+        #     History(customer_id_id = i.customer_id_id,
+        #             product_id_id = i.cart_id.product_id_id,
+        #             quantity =i.cart_id.quantity
+        #             ).save()
+        # # return  HttpResponse(History.objects.all())
         name =signinn[0].customer_id.name
         cust = Customer.objects.get(name=name)
         params ={ 'cart' : carts , 'total' : total, 'cust':cust,'date':date,'invoice' : invoice }
